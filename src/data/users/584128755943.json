@@ -1,0 +1,19 @@
+{
+  "numero": "584128755943",
+  "nombre": "_event_media__ab5e6b7b-7785-4cc6-b349-3e9043437932",
+  "pizzaVez": 0,
+  "menuCode": 0,
+  "menuRespuesta": 0,
+  "pizza": {},
+  "bebida": {},
+  "postre": {},
+  "bebidaVez": 0,
+  "postreVez": 0,
+  "respuesta": 0,
+  "entrega": "",
+  "pago": "",
+  "ubicacion": "",
+  "total": 0,
+  "error": 4,
+  "changeData": {}
+}

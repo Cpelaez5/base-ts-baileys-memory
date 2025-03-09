@@ -2,8 +2,10 @@ dist/*
 node_modules
 .env
 bot_sessions
+src/data/finished_sessions/*
+src/data/users/*
 
-*_sessions
+
 *tokens
 .wwebjs*
 

@@ -33,12 +33,12 @@ export const flowBienvenida = addKeyword<BaileysProvider, any>(
     pizzaVez = objetoJSON.pizzaVez;
     firstName = capitalice(extractFirstName(objetoJSON.nombre));
     console.log("¡Nueva sesión iniciada!");
-    const data: string = welcome(firstName, ctx.body, "La Brioche");
+    const data: string = welcome(firstName, ctx.body, "Tu Pizzería Preferida");
     message.push(data);
   } catch (err) {
     console.log("¡Usuario nuevo detectado!");
     register(ctx.from);
-    message.push(welcome("", ctx.body, "La Brioche"));
+    message.push(welcome("", ctx.body, "Tu Pizzería Preferida"));
   }
 
   if (checkTrue(wordPizza, ctx.body)) {

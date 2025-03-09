@@ -1,56 +1,47 @@
-const base_url = "http://localhost:1234/v1";
-const api_key = "not-needed"; // Not needed for the local mock server
+// Please install OpenAI SDK first: `npm install openai`
+import {OpenAI} from "openai";
+import dotenv from "dotenv";
+dotenv.config();
 
-export const postCompletion = async (messages) => {
+const openai = new OpenAI({
+        baseURL: 'https://api.deepseek.com',
+		    apiKey: process.env.OPENAI_API_KEY
+});
+
+export const toIA = async (messages) => {
   try {
-    const response = await fetch(`${base_url}/chat/completions`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${api_key}`
-      },
-      body: JSON.stringify({
-        model: "local-model", // This field is currently unused
-        messages: messages,
-        temperature: 0.7,
-        stream: false
-      })
+    const completion = await openai.chat.completions.create({
+      model: "deepseek-chat", // Asegúrate de que este modelo sea correcto
+      messages: messages,
+      temperature: 1.3, // Ajusta la temperatura para respuestas más consistentes
+      max_tokens: 100, // Limita la longitud de la respuesta
     });
 
-    if (!response.ok) throw new Error('Failed to fetch');
-
-    const completion = await response.json();
-    const answer = completion.choices[0].message.content
+    const answer = completion.choices[0].message.content;
     return answer;
   } catch (error) {
-    console.error('ErrorGS:', error);
+    console.error('Error al obtener la respuesta de la IA:', error);
+    return "Lo siento, hubo un error al procesar tu solicitud.";
   }
 };
 
+// const openaiReal = new OpenAI({
+//   organization: "org-XQtoH9t0Xmi6BDve6QAj6HrP",
+//   project: "CPDEV",
+//   apiKey: process.env.OPENAI_API_KEY,
+// });
 
-/* const chatLoop = async () => {
-  while (true) {
-    const completion = await postCompletion(history);
+// export async function chatGPT(messages) {
+//   try {
+//     const completion = await openaiReal.chat.completions.create({
+//       messages: messages,
+//       model: "gpt-3.5-turbo",
+//     });
 
-    if (completion && completion.choices && completion.choices[0] && completion.choices[0].delta && completion.choices[0].delta.content) {
-      console.log(completion.choices[0].delta.content);
-      history.push({ "role": "assistant", "content": completion.choices[0].delta.content });
-    } else {
-      console.log("No response or error in completion");
-    }
-
-    // To capture user input in Node.js, you might use readline or another npm package for asynchronous input.
-    const readline = require('readline').createInterface({
-      input: process.stdin,
-      output: process.stdout
-    });
-
-    readline.question('> ', (input) => {
-      history.push({ "role": "user", "content": input });
-      readline.close();
-      chatLoop(); // Call recursively to continue the loop
-    });
-  }
-};
-
-*/
+//     const answer = completion.choices[0].message.content;
+//     return answer;
+//   } catch (error) {
+//     console.error('Error al obtener la respuesta de la IA:', error);
+//     return "Lo siento, hubo un error al procesar tu solicitud.";
+//   }
+// }

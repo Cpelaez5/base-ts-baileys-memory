@@ -1,5 +1,6 @@
 import { BaileysProvider, addKeyword, EVENTS} from "~/services";
-import { toIA } from "~/chatLLM";
+import { toIA } from "../chatLLM";
+import { appendToSheet, readSheet } from "~/utils";
 
 export const ai = addKeyword<BaileysProvider, any>(
   EVENTS.WELCOME
@@ -10,8 +11,13 @@ export const ai = addKeyword<BaileysProvider, any>(
       { role: "user", content: ctx.body, name: "User " }
     ];
 
-    const answer = await toIA(messages);
+    await appendToSheet([[ctx.from, ctx.name]]);
+    const responce = await readSheet("A1:C10");
+    console.log('Respuesta de la hoja de cálculo:', responce);
 
+
+    const answer = await toIA(messages);
+    
     if (answer) {
       console.log('Respuesta de la IA:', answer);  
       await flowDynamic(answer);

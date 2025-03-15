@@ -35,3 +35,4 @@ export * from "./savePizza";
 export * from "./saveExtra";
 export * from "./processResponceBasic";
 export * from "./removeEmojis";
+export * from "./googleSheets";
